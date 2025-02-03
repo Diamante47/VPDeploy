@@ -99,6 +99,59 @@
             }
         </style>
     </div>
-</body>
-</html>
+    <script>
+        // Extensión de métodos personalizados
+        $.validator.addMethod("letras", function(value, element) {
+            return this.optional(element) || /^[a-zA-Z\s]+$/.test(value);
+        }, "Por favor, ingrese solo letras.");
+    
+        $("#frm_nuevo_cliente").validate({
+            rules: {
+                "ruta": {
+                    required: true
+                },
+                "bus": {
+                    required: true
+                },
+                "txt_fecha": {
+                    required: true,
+                    date: true
+                },
+                "txt_hora_partida": {
+                    required: true
+                },
+                "txt_hora_llegada": {
+                    required: true
+                },
+                "txt_costo_pasaje": {
+                    required: true,
+                    number: true,
+                    min: 0.01
+                }
+            },
+            messages: {
+                "ruta": {
+                    required: "Por favor seleccione una ruta"
+                },
+                "bus": {
+                    required: "Por favor seleccione un bus"
+                },
+                "txt_fecha": {
+                    required: "Por favor seleccione una fecha",
+                    date: "Ingrese una fecha válida"
+                },
+                "txt_hora_partida": {
+                    required: "Por favor ingrese la hora de partida"
+                },
+                "txt_hora_llegada": {
+                    required: "Por favor ingrese la hora de llegada"
+                },
+                "txt_costo_pasaje": {
+                    required: "Por favor ingrese el costo del pasaje",
+                    number: "Debe ingresar un número válido",
+                    min: "El costo del pasaje debe ser mayor a 0"
+                }
+            }
+        });
+    </script>
 {% endblock %}
