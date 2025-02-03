@@ -99,6 +99,86 @@
             }
         </style>
     </div>
+    <script>
+        // Método personalizado para validar solo letras
+        $.validator.addMethod("letras", function(value, element) {
+            return this.optional(element) || /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(value);
+        }, "Ingrese solo letras.");
+    
+        // Método personalizado para validar solo números
+        $.validator.addMethod("numbersonly", function(value, element) {
+            return this.optional(element) || /^[0-9]+$/.test(value);
+        }, "Ingrese solo números.");
+    
+        // Método para validar formato de DNI (Opcional: puedes modificarlo según el formato de tu país)
+        $.validator.addMethod("dni", function(value, element) {
+            return this.optional(element) || /^[0-9]{8}$/.test(value);
+        }, "Ingrese un DNI válido (8 dígitos).");
+    
+        // Método para validar el teléfono (Opcional: puedes ajustarlo según el país)
+        $.validator.addMethod("telefono", function(value, element) {
+            return this.optional(element) || /^[0-9]{7,10}$/.test(value);
+        }, "Ingrese un número de teléfono válido (7 a 10 dígitos).");
+    
+        // Método para validar la imagen (formatos permitidos)
+        $.validator.addMethod("imagen", function(value, element) {
+            return this.optional(element) || /\.(jpg|jpeg|png)$/i.test(value);
+        }, "Solo se permiten imágenes en formato JPG, JPEG o PNG.");
+    
+        $("#frm_nuevo_cliente").validate({
+            rules: {
+                "txt_nombre": {
+                    required: true,
+                    letras: true
+                },
+                "txt_apellido": {
+                    required: true,
+                    letras: true
+                },
+                "txt_dni": {
+                    required: true,
+                    dni: true
+                },
+                "txt_telefono": {
+                    required: true,
+                    telefono: true
+                },
+                "txt_email": {
+                    required: true,
+                    email: true
+                },
+                "txt_foto": {
+                    required: false,
+                    imagen: true
+                }
+            },
+            messages: {
+                "txt_nombre": {
+                    required: "Por favor, ingrese su nombre.",
+                    letras: "Ingrese solo letras en el nombre."
+                },
+                "txt_apellido": {
+                    required: "Por favor, ingrese su apellido.",
+                    letras: "Ingrese solo letras en el apellido."
+                },
+                "txt_dni": {
+                    required: "Por favor, ingrese su DNI.",
+                    dni: "El DNI debe contener 8 dígitos numéricos."
+                },
+                "txt_telefono": {
+                    required: "Por favor, ingrese su número de teléfono.",
+                    telefono: "Ingrese un número de teléfono válido (7 a 10 dígitos)."
+                },
+                "txt_email": {
+                    required: "Por favor, ingrese su correo electrónico.",
+                    email: "Ingrese un correo válido (ejemplo@dominio.com)."
+                },
+                "txt_foto": {
+                    imagen: "Solo se permiten archivos en formato JPG, JPEG o PNG."
+                }
+            }
+        });
+    </script>
 </body>
 </html>
 {% endblock %}
